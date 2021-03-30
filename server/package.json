@@ -1,0 +1,13 @@
+{
+  "name": "keycomp",
+  "version": "1.0.0",
+  "description": "keycomp server",
+  "main": "index.js",
+  "license": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg": "^8.5.1"
+  }
+}
