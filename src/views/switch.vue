@@ -10,7 +10,7 @@ import tableHeader from "@/components/table-header.vue";
 import itemTable from "@/components/table.vue"; // @ is an alias to /src
 
 export default defineComponent({
-  name: "Home",
+  name: "home",
   components: {
     itemTable,
     tableHeader

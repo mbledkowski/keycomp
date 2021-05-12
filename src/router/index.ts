@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Home from '../views/switch.vue';
+import home from '../views/switch.vue';
+import switchInfo from '../views/switch-info.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -9,8 +10,13 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'switch',
-    component: Home,
+    component: home,
   },
+  {
+    path: '/:switchname',
+    name: 'switch-info',
+    component: switchInfo,
+  }
   // {
   //   path: '/keycap',
   //   name: 'keycap',
