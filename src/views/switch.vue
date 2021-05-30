@@ -7,12 +7,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import tableHeader from "@/components/table-header.vue";
-import itemTable from "@/components/table.vue"; // @ is an alias to /src
+// import itemTable from "@/components/table.vue"; // @ is an alias to /src
 
 export default defineComponent({
   name: "home",
   components: {
-    itemTable,
+    // itemTable,
     tableHeader
   }
 });

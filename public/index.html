@@ -7,14 +7,28 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
 
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="/__/firebase/8.3.1/firebase-app.js"></script>
+  <style>
+    @font-face {
+      font-family: 'Barlow';
+      font-style: normal;
+      font-weight: 400;
+      src: url('https://fqgcqfeyzxvqgzyyxdjg.supabase.co/storage/v1/object/sign/keycomp/fonts/barlow-v5-latin-regular.woff2?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJrZXljb21wL2ZvbnRzL2Jhcmxvdy12NS1sYXRpbi1yZWd1bGFyLndvZmYyIiwiaWF0IjoxNjIyMTMzMTczLCJleHAiOjE5Mzc0OTMxNzN9.Vq7p53ii1tA6kqkMNMams88EKVzZ_3xeEBgQLhrLA-k') format('woff2');
+    }
 
-  <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
+    @font-face {
+      font-family: 'Barlow';
+      font-style: normal;
+      font-weight: 500;
+      src: url('https://fqgcqfeyzxvqgzyyxdjg.supabase.co/storage/v1/object/sign/keycomp/fonts/barlow-v5-latin-500.woff2?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJrZXljb21wL2ZvbnRzL2Jhcmxvdy12NS1sYXRpbi01MDAud29mZjIiLCJpYXQiOjE2MjIxMzM5NzcsImV4cCI6MTkzNzQ5Mzk3N30.s1EaCYe60SKsdoBvWUA6ErjWknyDGn0Be2dVlBt_N4Y') format('woff2');
+    }
 
-  <!-- Initialize Firebase -->
-  <script src="/__/firebase/init.js"></script>
+    @font-face {
+      font-family: 'Barlow';
+      font-style: normal;
+      font-weight: 600;
+      src: url('https://fqgcqfeyzxvqgzyyxdjg.supabase.co/storage/v1/object/sign/keycomp/fonts/barlow-v5-latin-600.woff2?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJrZXljb21wL2ZvbnRzL2Jhcmxvdy12NS1sYXRpbi02MDAud29mZjIiLCJpYXQiOjE2MjIxMzMyNjEsImV4cCI6MTkzNzQ5MzI2MX0.1RxUZb6sn8JisqF-oeHJgdpRCzcXose_XKFflRi7E_U') format('woff2');
+    }
+  </style>
 
   <title>
     <%= htmlWebpackPlugin.options.title %>
