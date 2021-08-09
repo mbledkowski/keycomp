@@ -186,7 +186,7 @@ article
               p --
           p total-travel
   #secondpart
-    div
+    .sidebar
       h2 prices
       .widget
         table
@@ -198,7 +198,7 @@ article
       h2 models
       .widget(v-for="(item, index) in entries[0].groupsOfModels", :key="index")
         h3 {{ item }}
-        pre {{ entries[0].models[index] }}
+        p {{ entries[0].models[index] }}
 
     div
       h2 build
@@ -206,10 +206,10 @@ article
     div
       h2 force graph
       .widget
-        .legend
-          p.primary pressure
-          p.secondary reset
-    div
+        forceGraph(
+          :chartdata="{ type: 'scatter', data: { labels: ['Black', 'Red'], datasets: [ { label: 'pressure', data: [ { x: 0.005, y: 29.76 }, { x: 0.05, y: 32.19 }, { x: 0.5, y: 35.12 }, { x: 1, y: 38.43 }, { x: 1.5, y: 41.66 }, { x: 2, y: 45.08 }, { x: 2.5, y: 48.16 }, { x: 3, y: 51.46 }, { x: 3.5, y: 54.75 }, { x: 3.8, y: 56.71 }, { x: 3.95, y: 59.74 }, { x: 4, y: 63.78 }, ], pointRadius: [0, 0, 0, 0, 0, 6, 0, 0], backgroundColor: 'red', borderColor: 'red', }, { label: 'reset', data: [ { x: 0.005, y: 21.12 }, { x: 0.025, y: 22.69 }, { x: 0.05, y: 23.25 }, { x: 0.5, y: 26.17 }, { x: 1, y: 29.39 }, { x: 1.5, y: 32.59 }, { x: 1.85, y: 35.12 }, { x: 1.95, y: 39.75 }, { x: 2, y: 42.2 }, { x: 2.07, y: 43.35 }, { x: 2.5, y: 46.13 }, { x: 3, y: 49.39 }, { x: 3.5, y: 52.6 }, { x: 3.8, y: 54.76 }, { x: 3.85, y: 55.54 }, { x: 3.9, y: 56.91 }, { x: 3.95, y: 59.26 }, { x: 3.975, y: 61 }, { x: 4, y: 63.78 }, ], pointRadius: [0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: 'black', borderColor: 'black', }, ], }, options: { showLine: true, lineTension: 0.2, elements: { point: { radius: 0, hitRadius: 6 } }, scales: { x: { type: 'linear', position: 'bottom', min: 0, max: 4 }, y: { min: 0, suggestedMax: 35 } }, plugins: { legend: { position: 'bottom' } } }, }"
+        )
+    #reviews
       h2 reviews
       //- .widget(v-for="")
     #sources
@@ -226,6 +226,9 @@ article
 import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
 import getElement from "@/composables/getElement";
+
+import forceGraph from "@/components/force-graph.vue";
+
 export default defineComponent({
   name: "switch-info",
   setup() {
@@ -234,6 +237,9 @@ export default defineComponent({
     load(route.params.switchname);
     console.log(entries);
     return { entries, error };
+  },
+  components: {
+    forceGraph
   },
   data() {
     return {
@@ -283,13 +289,29 @@ body {
   color: var(--foreground);
 }
 
-#firstpart {
+#firstpart,
+#secondpart {
   display: grid;
   grid-gap: var(--kilo-spacing);
+  margin: var(--kilo-spacing);
+}
+
+#firstpart {
   grid-template-columns: auto minmax(min-content, max-content);
   grid-template-rows: 242px 242px;
   .widget-image {
     grid-row: 1/-1;
+  }
+}
+
+#secondpart {
+  grid-template-columns: 3fr 4fr 4fr;
+  .sidebar {
+    grid-row: 1/5;
+  }
+  #reviews,
+  #sources {
+    grid-column: 2/-1;
   }
 }
 
@@ -337,6 +359,11 @@ a {
   p:first-child {
     margin-bottom: 1px;
   }
+}
+
+.title,
+#spec {
+  justify-content: center;
 }
 
 #spec {
