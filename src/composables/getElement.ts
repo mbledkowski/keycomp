@@ -5,24 +5,40 @@ import { createClient } from '@supabase/supabase-js'
 const supabase = createClient("https://fqgcqfeyzxvqgzyyxdjg.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyMTQyNDk5NCwiZXhwIjoxOTM3MDAwOTk0fQ.q7XT5jdIDbpK6aWuyfSd0HRinLQqZRETFDA4dW_s4bU")
 
 const getElement = () => {
-  let entries = ref<any[]>([])
-  let error = ref(null)
-  const load = async (switchName: string) => {
-    let nameSplited: Array<string> = switchName.split("-")
-    let brand: string = nameSplited.shift() || ''
+  let entry = ref<Object[]>([])
+  let error = ref<Error>()
+  let photos = ref<Object[]>([])
+  let switchName = ref<String>("")
 
-    let { data, error } = await supabase.from("switches").select("*").eq("name", nameSplited.join(" ")).contains("brand", `\{${brand}\}`) || []
+  let brand: string, name: string
 
+  const fetchSwitch = async () => {
+    console.log("a")
+    let nameSplited: string[] = switchName.value.split("-")
+    brand = nameSplited.shift() || ''
+    name = nameSplited.join(" ")
+
+    console.log(name)
+    let { data, error } = await supabase.from("switches").select("*").eq("name", name).contains("brand", `\{${brand}\}`)
     data = data ? data : []
 
     if (error) {
       console.error(error.message)
     } else {
       // entries.value = entries.value.concat(data[0])
-      entries.value.push(data[0])
+      console.log(entry)
+      entry.value.push(data[0])
     }
-
   }
-  return { entries, error, load }
+
+  const fetchSwitchPhotos = async () => {
+
+    let { data, error } = await supabase.from("switches").select("*").eq("name", name).contains("brand", `\{${brand}\}`).select(`photos(id,src,link,desc,model,type,author)`)
+    data = data ? data : []
+
+    photos.value = data[0].photos
+    console.log(photos);
+  }
+  return { entry, error, photos, switchName, fetchSwitch, fetchSwitchPhotos }
 }
 export default getElement

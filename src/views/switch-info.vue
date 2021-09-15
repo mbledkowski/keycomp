@@ -1,10 +1,10 @@
 <template lang="pug">
 article
   .title
-    h1(v-if="entries[0].brand.length === 1") {{ entries[0].brand[0] }} {{ entries[0].name }}
-    h1(v-else) {{ entries[0].brand[0] }} x {{ entries[0].brand[1] }} {{ entries[0].name }}
+    h1(v-if="entry[0].brand.length === 1") {{ entry[0].brand[0] }} {{ entry[0].name }}
+    h1(v-else) {{ entry[0].brand[0] }} x {{ entry[0].brand[1] }} {{ entry[0].name }}
     //- div
-    //-   p(v-if="entries[0].metascore !== -1") {{ entries[0].metascore }}
+    //-   p(v-if="entry[0].metascore !== -1") {{ entry[0].metascore }}
     //-   p(v-else) --
     //-   .subvalues
     //-     p score
@@ -12,67 +12,63 @@ article
   #spec.row
     div
       h3 profile
-      p(v-if="entries[0].profile === 1") normal
-      p(v-else-if="entries[0].profile === 0") low
+      p(v-if="entry[0].profile === 1") normal
+      p(v-else-if="entry[0].profile === 0") low
     div
       h3 loudness
-      p(v-if="entries[0].loudness === 1") normal
-      p(v-else-if="entries[0].loudness === 2") loud
-      p(v-else-if="entries[0].loudness === 0") silent
+      p(v-if="entry[0].loudness === 1") normal
+      p(v-else-if="entry[0].loudness === 2") loud
+      p(v-else-if="entry[0].loudness === 0") silent
     div
       h3 travel
-      p(v-if="entries[0].travel === 1") tactile
-      p(v-else-if="entries[0].travel === 0") linear
-      p(v-else-if="entries[0].travel === 2") clicky
+      p(v-if="entry[0].travel === 1") tactile
+      p(v-else-if="entry[0].travel === 0") linear
+      p(v-else-if="entry[0].travel === 2") clicky
     div
       h3 stem
-      p {{ entries[0].stem }}
+      p {{ entry[0].stem }}
     div
       h3 spring
-      p {{ entries[0].spring }}
+      p {{ entry[0].spring }}
     div
       h3 socket
-      p {{ entries[0].socket }}
+      p {{ entry[0].socket }}
     div
       h3 mount
-      p(v-if="entries[0].mount === 1") plate
-      p(v-else-if="entries[0].mount === 2") PCB
-      p(v-else-if="entries[0].mount === 3") plate + PCB
+      p(v-if="entry[0].mount === 1") plate
+      p(v-else-if="entry[0].mount === 2") PCB
+      p(v-else-if="entry[0].mount === 3") plate + PCB
     div
       h3 diode
-      p(v-if="entries[0].diode === 1") no
-      p(v-else-if="entries[0].diode === 2") yes
-      p(v-else-if="entries[0].diode === 3") no + yes
-      p(v-else-if="entries[0].diode === 7") no + yes + jumper
+      p(v-if="entry[0].diode === 1") no
+      p(v-else-if="entry[0].diode === 2") yes
+      p(v-else-if="entry[0].diode === 3") no + yes
+      p(v-else-if="entry[0].diode === 7") no + yes + jumper
     div
       h3 lubricant
-      p(v-if="entries[0].lubricated === false") no
-      p(v-if="entries[0].lubricated === true") {{ entries[0].lubeName }}
+      p(v-if="entry[0].lubricated === false") no
+      p(v-if="entry[0].lubricated === true") {{ entry[0].lubeName }}
     div
       h3 durability
-      p(v-if="entries[0].durabilitySign === 1") > {{ entries[0].durability }} mln
-      p(v-else-if="entries[0].durabilitySign === 0") = {{ entries[0].durability }} mln
+      p(v-if="entry[0].durabilitySign === 1") > {{ entry[0].durability }} mln
+      p(v-else-if="entry[0].durabilitySign === 0") = {{ entry[0].durability }} mln
     div
       h3 release
-      p(v-if="entries[0].releaseAccuracy === 0") y{{ new Date(entries[0].release).getFullYear() }}
-      p(v-else-if="entries[0].releaseAccuracy === 2") {{ new Date(entries[0].release).getDate() }} {{ monthsNames[new Date(entries[0].release).getMonth()] }} {{ new Date(entries[0].release).getFullYear() }}
+      p(v-if="entry[0].releaseAccuracy === 0") y{{ new Date(entry[0].release).getFullYear() }}
+      p(v-else-if="entry[0].releaseAccuracy === 2") {{ new Date(entry[0].release).getDate() }} {{ monthsNames[new Date(entry[0].release).getMonth()] }} {{ new Date(entry[0].release).getFullYear() }}
   #firstpart
-    .widget-image
-      //- img(
-      //-   src="https://www.corsair.com/corsairmedia/sys_master/productcontent/CH-9000531-NA_RF-MX1A-M1NN_RED.png"
-      //- )
+    .widget.image
+      imagePrev(:photos="photos")
     div
       h2 force
       .widget.stats
         div
-          .row(v-if="entries[0].initial !== 0 && entries[0].initial !== null")
-            p.mainvalue {{ entries[0].initial }}
+          .row(v-if="entry[0].initial !== 0 && entry[0].initial !== null")
+            p.mainvalue {{ entry[0].initial }}
             .subvalues
-              p(
-                v-if="entries[0].initialA !== 0 && entries[0].initialA !== null"
-              ) ± {{ entries[0].initialA }}
+              p(v-if="entry[0].initialA !== 0 && entry[0].initialA !== null") ± {{ entry[0].initialA }}
               p(v-else) ± --
-              p(v-if="entries[0].forceUnit === 0") gf
+              p(v-if="entry[0].forceUnit === 0") gf
               p(v-else) cN
           .row(v-else)
             p.mainvalue --
@@ -81,16 +77,12 @@ article
               p --
           p initial
         div
-          .row(
-            v-if="entries[0].pressure !== 0 && entries[0].pressure !== null"
-          )
-            p.mainvalue {{ entries[0].pressure }}
+          .row(v-if="entry[0].pressure !== 0 && entry[0].pressure !== null")
+            p.mainvalue {{ entry[0].pressure }}
             .subvalues
-              p(
-                v-if="entries[0].pressureA !== 0 && entries[0].pressureA !== null"
-              ) ± {{ entries[0].pressureA }}
+              p(v-if="entry[0].pressureA !== 0 && entry[0].pressureA !== null") ± {{ entry[0].pressureA }}
               p(v-else) ± --
-              p(v-if="entries[0].forceUnit === 0") gf
+              p(v-if="entry[0].forceUnit === 0") gf
               p(v-else) cN
           .row(v-else)
             p.mainvalue --
@@ -99,16 +91,14 @@ article
               p --
           p pressure
         div
-          .row(
-            v-if="entries[0].actuation !== 0 && entries[0].actuation !== null"
-          )
-            p.mainvalue {{ entries[0].actuation }}
+          .row(v-if="entry[0].actuation !== 0 && entry[0].actuation !== null")
+            p.mainvalue {{ entry[0].actuation }}
             .subvalues
               p(
-                v-if="entries[0].actuationA !== 0 && entries[0].actuationA !== null"
-              ) ± {{ entries[0].actuationA }}
+                v-if="entry[0].actuationA !== 0 && entry[0].actuationA !== null"
+              ) ± {{ entry[0].actuationA }}
               p(v-else) ± --
-              p(v-if="entries[0].forceUnit === 0") gf
+              p(v-if="entry[0].forceUnit === 0") gf
               p(v-else) cN
           .row(v-else)
             p.mainvalue --
@@ -117,12 +107,12 @@ article
               p --
           p actuation
         div
-          .row(v-if="entries[0].bottom !== 0 && entries[0].bottom !== null")
-            p.mainvalue {{ entries[0].bottom }}
+          .row(v-if="entry[0].bottom !== 0 && entry[0].bottom !== null")
+            p.mainvalue {{ entry[0].bottom }}
             .subvalues
-              p(v-if="entries[0].bottomA !== 0 && entries[0].bottomA !== null") ± {{ entries[0].bottomA }}
+              p(v-if="entry[0].bottomA !== 0 && entry[0].bottomA !== null") ± {{ entry[0].bottomA }}
               p(v-else) ± --
-              p(v-if="entries[0].forceUnit === 0") gf
+              p(v-if="entry[0].forceUnit === 0") gf
               p(v-else) cN
           .row(v-else)
             p.mainvalue --
@@ -135,14 +125,12 @@ article
       .widget.stats
         div
         div
-          .row(
-            v-if="entries[0].peakForce !== 0 && entries[0].peakForce !== null"
-          )
-            p.mainvalue {{ entries[0].peakForce / 10 }}
+          .row(v-if="entry[0].peakForce !== 0 && entry[0].peakForce !== null")
+            p.mainvalue {{ entry[0].peakForce / 10 }}
             .subvalues
               p(
-                v-if="entries[0].peakForceA !== 0 && entries[0].peakForceA !== null"
-              ) ± {{ entries[0].peakForceA / 10 }}
+                v-if="entry[0].peakForceA !== 0 && entry[0].peakForceA !== null"
+              ) ± {{ entry[0].peakForceA / 10 }}
               p(v-else) ± --
               p mm
           .row(v-else)
@@ -152,14 +140,12 @@ article
               p --
           p peak force
         div
-          .row(
-            v-if="entries[0].preTravel !== 0 && entries[0].preTravel !== null"
-          )
-            p.mainvalue {{ entries[0].preTravel / 10 }}
+          .row(v-if="entry[0].preTravel !== 0 && entry[0].preTravel !== null")
+            p.mainvalue {{ entry[0].preTravel / 10 }}
             .subvalues
               p(
-                v-if="entries[0].preTravelA !== 0 && entries[0].preTravelA !== null"
-              ) ± {{ entries[0].preTravelA / 10 }}
+                v-if="entry[0].preTravelA !== 0 && entry[0].preTravelA !== null"
+              ) ± {{ entry[0].preTravelA / 10 }}
               p(v-else) ± --
               p mm
           .row(v-else)
@@ -170,13 +156,13 @@ article
           p pre-travel
         div
           .row(
-            v-if="entries[0].totalTravel !== 0 && entries[0].totalTravel !== null"
+            v-if="entry[0].totalTravel !== 0 && entry[0].totalTravel !== null"
           )
-            p.mainvalue {{ entries[0].totalTravel / 10 }}
+            p.mainvalue {{ entry[0].totalTravel / 10 }}
             .subvalues
               p(
-                v-if="entries[0].totalTravelA !== 0 && entries[0].totalTravelA !== null"
-              ) ± {{ entries[0].totalTravelA / 10 }}
+                v-if="entry[0].totalTravelA !== 0 && entry[0].totalTravelA !== null"
+              ) ± {{ entry[0].totalTravelA / 10 }}
               p(v-else) ± --
               p mm
           .row(v-else)
@@ -196,25 +182,40 @@ article
       .widget
         p more
       h2 models
-      .widget(v-for="(item, index) in entries[0].groupsOfModels", :key="index")
+      .widget(v-for="(item, index) in entry[0].groupsOfModels", :key="index")
         h3 {{ item }}
-        p {{ entries[0].models[index] }}
+        p {{ entry[0].models[index] }}
 
     div
       h2 build
       .widget
+        build(
+          :img="photos.filter((i) => i.type === 1)[0].src",
+          :topM="entry[0].topM",
+          :topC="entry[0].topC",
+          :stemC="entry[0].stemC",
+          :stemM="entry[0].stemM",
+          :contactC="entry[0].contactC",
+          :contactM="entry[0].contactM",
+          :springC="entry[0].springC",
+          :springM="entry[0].springM",
+          :bottomM="entry[0].bottomM",
+          :bottomC="entry[0].bottomC"
+        )
     div
       h2 force graph
       .widget
         forceGraph(
-          :chartdata="{ type: 'scatter', data: { labels: ['Black', 'Red'], datasets: [ { label: 'pressure', data: [ { x: 0.005, y: 29.76 }, { x: 0.05, y: 32.19 }, { x: 0.5, y: 35.12 }, { x: 1, y: 38.43 }, { x: 1.5, y: 41.66 }, { x: 2, y: 45.08 }, { x: 2.5, y: 48.16 }, { x: 3, y: 51.46 }, { x: 3.5, y: 54.75 }, { x: 3.8, y: 56.71 }, { x: 3.95, y: 59.74 }, { x: 4, y: 63.78 }, ], pointRadius: [0, 0, 0, 0, 0, 6, 0, 0], backgroundColor: 'red', borderColor: 'red', }, { label: 'reset', data: [ { x: 0.005, y: 21.12 }, { x: 0.025, y: 22.69 }, { x: 0.05, y: 23.25 }, { x: 0.5, y: 26.17 }, { x: 1, y: 29.39 }, { x: 1.5, y: 32.59 }, { x: 1.85, y: 35.12 }, { x: 1.95, y: 39.75 }, { x: 2, y: 42.2 }, { x: 2.07, y: 43.35 }, { x: 2.5, y: 46.13 }, { x: 3, y: 49.39 }, { x: 3.5, y: 52.6 }, { x: 3.8, y: 54.76 }, { x: 3.85, y: 55.54 }, { x: 3.9, y: 56.91 }, { x: 3.95, y: 59.26 }, { x: 3.975, y: 61 }, { x: 4, y: 63.78 }, ], pointRadius: [0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: 'black', borderColor: 'black', }, ], }, options: { showLine: true, lineTension: 0.2, elements: { point: { radius: 0, hitRadius: 6 } }, scales: { x: { type: 'linear', position: 'bottom', min: 0, max: 4 }, y: { min: 0, suggestedMax: 35 } }, plugins: { legend: { position: 'bottom' } } }, }"
+          :chartdata="entry[0].graphs",
+          :firstColor="entry[0].stemC[2]",
+          :secondColor="entry[0].topC[2]"
         )
     #reviews
       h2 reviews
       //- .widget(v-for="")
     #sources
       h2 sources
-      p(v-for="source in entries[0].sources")
+      p(v-for="source in entry[0].sources")
         a(:href="source.link") {{ source.name }}
         |
         | -
@@ -228,18 +229,30 @@ import { useRoute } from "vue-router";
 import getElement from "@/composables/getElement";
 
 import forceGraph from "@/components/force-graph.vue";
+import imagePrev from "@/components/image-prev.vue";
+import build from "@/components/build.vue";
 
 export default defineComponent({
   name: "switch-info",
   setup() {
     const route = useRoute();
-    const { entries, error, load } = getElement();
-    load(route.params.switchname);
-    console.log(entries);
-    return { entries, error };
+    const {
+      entry,
+      error,
+      photos,
+      switchName,
+      fetchSwitch,
+      fetchSwitchPhotos
+    } = getElement();
+    switchName.value = route.params.switchname;
+    fetchSwitch();
+    fetchSwitchPhotos();
+    return { entry, photos, error };
   },
   components: {
-    forceGraph
+    forceGraph,
+    imagePrev,
+    build
   },
   data() {
     return {
@@ -266,7 +279,7 @@ export default defineComponent({
 :root {
   --foreground: black;
   --accent: red; //TODO
-  --border: gray;
+  --border: #c7c7c7;
   --background: white;
 
   --pico-spacing: 8px;
@@ -299,7 +312,7 @@ body {
 #firstpart {
   grid-template-columns: auto minmax(min-content, max-content);
   grid-template-rows: 242px 242px;
-  .widget-image {
+  .widget.image {
     grid-row: 1/-1;
   }
 }
@@ -388,12 +401,11 @@ a {
   padding: var(--nano-spacing);
 }
 
-.widget-image {
+.widget.image {
   border: 2px solid var(--border);
   border-radius: var(--nano-spacing);
-  img {
-    border-radius: var(--nano-spacing);
-  }
+  overflow: hidden;
+  padding: unset;
 }
 
 .row {
