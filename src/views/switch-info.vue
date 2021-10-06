@@ -173,18 +173,16 @@ article
           p total-travel
   #secondpart
     .sidebar
-      h2 prices
-      .widget
-        table
-        p links might be affiliate
-        p more
-      h2 price history
-      .widget
-        p more
+      //- h2 prices
+      //- .widget
+      //-   table
+      //-   p links might be affiliate
+      //-   p more
+      //- h2 price history
+      //- .widget
+      //-   p more
       h2 models
-      .widget(v-for="(item, index) in entry[0].groupsOfModels", :key="index")
-        h3 {{ item }}
-        p {{ entry[0].models[index] }}
+      models(:entry="entry", :models="models", :modelGroups="modelGroups")
 
     div
       h2 build
@@ -210,17 +208,19 @@ article
           :firstColor="entry[0].stemC[2]",
           :secondColor="entry[0].topC[2]"
         )
-    #reviews
-      h2 reviews
-      //- .widget(v-for="")
+    //- #reviews
+    //-   h2 reviews
+    //-   //- .widget(v-for="")
     #sources
       h2 sources
-      p(v-for="source in entry[0].sources")
-        a(:href="source.link") {{ source.name }}
+      p(v-for="i in sources.name.length")
+        a(v-if="sources.link[i-1] === 'DATASHEET'" target="_blank" rel="nofollow noopener" href="https://keycomp.co/404") {{ sources.name[i-1] }}
+        a(v-else-if="sources.link[i-1] === 'DATABASE'" target="_blank" rel="nofollow noopener" href="https://keycomp.co/database") {{ sources.name[i-1] }}
+        a(v-else target="_blank" rel="nofollow noopener" :href="sources.link[i-1]") {{ sources.name[i-1] }}
         |
         | -
         |
-        | {{ source.desc }}
+        | {{ sources.desc[i-1] }}
 </template>
 
 <script>
@@ -231,6 +231,7 @@ import getElement from "@/composables/getElement";
 import forceGraph from "@/components/force-graph.vue";
 import imagePrev from "@/components/image-prev.vue";
 import build from "@/components/build.vue";
+import models from "@/components/models.vue";
 
 export default defineComponent({
   name: "switch-info",
@@ -240,19 +241,27 @@ export default defineComponent({
       entry,
       error,
       photos,
+      sources,
+      models,
+      modelGroups,
       switchName,
       fetchSwitch,
-      fetchSwitchPhotos
+      fetchSwitchPhotos,
+      fetchSwitchSources,
+      fetchSwitchModels
     } = getElement();
     switchName.value = route.params.switchname;
     fetchSwitch();
     fetchSwitchPhotos();
-    return { entry, photos, error };
+    fetchSwitchSources();
+    fetchSwitchModels();
+    return { entry, photos, sources, models, modelGroups, error };
   },
   components: {
     forceGraph,
     imagePrev,
-    build
+    build,
+    models
   },
   data() {
     return {
@@ -302,6 +311,10 @@ body {
   color: var(--foreground);
 }
 
+article{ 
+  margin: auto;
+  max-width: 1237px;}
+
 #firstpart,
 #secondpart {
   display: grid;
@@ -318,7 +331,7 @@ body {
 }
 
 #secondpart {
-  grid-template-columns: 3fr 4fr 4fr;
+  grid-template-columns: 295px 435px 435px;
   .sidebar {
     grid-row: 1/5;
   }
@@ -425,11 +438,6 @@ a {
       font: var(--title2);
     }
   }
-}
-
-.legend {
-  p.primary:before {
-  } //TODO
 }
 
 #sources {

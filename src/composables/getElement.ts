@@ -8,6 +8,9 @@ const getElement = () => {
   let entry = ref<Object[]>([])
   let error = ref<Error>()
   let photos = ref<Object[]>([])
+  let sources = ref<Object[]>([])
+  let models = ref<Object[]>([])
+  let modelGroups = ref<Object[]>([])
   let switchName = ref<String>("")
 
   let brand: string, name: string
@@ -37,8 +40,40 @@ const getElement = () => {
     data = data ? data : []
 
     photos.value = data[0].photos
-    console.log(photos);
   }
-  return { entry, error, photos, switchName, fetchSwitch, fetchSwitchPhotos }
+
+  const fetchSwitchSources = async () => {
+
+    let { data, error } = await supabase.from("switches").select("*").eq("name", name).contains("brand", `\{${brand}\}`).select(`sources(id,name,link,desc)`)
+    data = data ? data : []
+
+    console.log(sources)
+
+    sources.value = data[0].sources
+  }
+
+  const fetchSwitchModels = async () => {
+    let { data, error } = await supabase.from("switches").select("*").eq("name", name).contains("brand", `\{${brand}\}`).select(`models(id, group, name, characteristic)`)
+    data = data ? data : []
+
+    models.value = data[0]
+
+    modelGroups.value = await fetchSwitchGroups(data[0].models)
+
+    console.log(models.value)
+    console.log(modelGroups.value)
+  }
+  const fetchSwitchGroups = async (models: { group: Number }[]) => {
+    let groups: Number[] = models
+      .map(((item: { group: Number }) => item.group))
+      .filter((item: Number, i: Number, array: Array<Number>) => array.indexOf(item) === i)
+
+    let { data, error } = await supabase.from("modelGroups").select("*").in("id", groups)
+
+    data = data ? data : []
+
+    return data
+  }
+  return { entry, error, photos, sources, models, modelGroups, switchName, fetchSwitch, fetchSwitchPhotos, fetchSwitchSources, fetchSwitchModels }
 }
 export default getElement
