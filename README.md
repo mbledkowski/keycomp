@@ -12,10 +12,10 @@ JavaScript, TypeScript, Vue.js, Chart.js, Node.js
 Netlify, Supabase ( postgreSQL, Supabase Storage)
 
 ## Project setup
-`yarn install`
-`yarn serve` - Compiles and hot-reloads for development
-`yarn build` - Compiles and minifies for production
-`yarn lint` - Lints and fixes files
+- `yarn install`
+- `yarn serve` - Compiles and hot-reloads for development
+- `yarn build` - Compiles and minifies for production
+- `yarn lint` - Lints and fixes files
 
 ## Projects related
 - \[[keycomp_reputation](github.com/mbledkowski/keycomp_reputation)\] - used for calculating switch metascore 
