@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import home from '../views/switch.vue'
-import error from '../views/error.vue'
-import switchInfo from '../views/switch-info.vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import home from '../views/switches.vue';
+import error from '../views/error.vue';
+import switchInfo from '../views/switch-info.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -19,10 +19,10 @@ const routes: Array<RouteRecordRaw> = [
     component: error,
   },
   {
-    path: '/:switchname([a-zA-Z0-9\-]+[a-zA-Z]{2}[a-zA-Z0-9\-]+)',
+    path: '/:switchname([a-zA-Z0-9-]+[a-zA-Z]{2}[a-zA-Z0-9-]+)',
     name: 'switch-info',
     component: switchInfo,
-  }
+  },
   // {
   //   path: '/keycap',
   //   name: 'keycap',

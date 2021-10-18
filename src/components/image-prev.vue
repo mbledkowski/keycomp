@@ -7,22 +7,23 @@
     v-for="(item, i) in photos",
     :key="i",
     :class="{ active: i === activeImage }",
-    v-on:click="activeImage = item.id - 1"
+    v-on:click="activeImage = i"
   )
     img(:src="item.src")
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
+
 export default defineComponent({
   props: {
-    photos: Object
+    photos: Object,
   },
   data() {
     return {
-      activeImage: 2
+      activeImage: 2,
     };
-  }
+  },
 });
 </script>
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 <template lang="pug">
-article
+article(v-if="entry[0]")
   .title
     h1(v-if="entry[0].brand.length === 1") {{ entry[0].brand[0] }} {{ entry[0].name }}
     h1(v-else) {{ entry[0].brand[0] }} x {{ entry[0].brand[1] }} {{ entry[0].name }}
@@ -26,13 +26,14 @@ article
       p(v-else-if="entry[0].travel === 2") clicky
     div
       h3 stem
-      p {{ entry[0].stem }}
+      p(v-if="entry[0].stem===0") MX
     div
       h3 spring
-      p {{ entry[0].spring }}
+      p(v-if="entry[0].spring===0") std. Cherry
+      p(v-else-if="entry[0].spring===1") low profile Cherry
     div
       h3 socket
-      p {{ entry[0].socket }}
+      p(v-if="entry[0].socket===0") std. Cherry
     div
       h3 mount
       p(v-if="entry[0].mount === 1") plate
@@ -44,6 +45,7 @@ article
       p(v-else-if="entry[0].diode === 2") yes
       p(v-else-if="entry[0].diode === 3") no + yes
       p(v-else-if="entry[0].diode === 7") no + yes + jumper
+      p(v-for="i in entry[0].diodeAdditional") + {{i}}
     div
       h3 lubricant
       p(v-if="entry[0].lubricated === false") no
@@ -52,12 +54,15 @@ article
       h3 durability
       p(v-if="entry[0].durabilitySign === 1") > {{ entry[0].durability }} mln
       p(v-else-if="entry[0].durabilitySign === 0") = {{ entry[0].durability }} mln
-    div
+    div(v-if="entry[0].release")
       h3 release
       p(v-if="entry[0].releaseAccuracy === 0") y{{ new Date(entry[0].release).getFullYear() }}
-      p(v-else-if="entry[0].releaseAccuracy === 2") {{ new Date(entry[0].release).getDate() }} {{ monthsNames[new Date(entry[0].release).getMonth()] }} {{ new Date(entry[0].release).getFullYear() }}
+      p(v-else-if="entry[0].releaseAccuracy === 2")
+        | {{ new Date(entry[0].release).getDate() }}
+        | {{ monthsNames[new Date(entry[0].release).getMonth()] }}
+        | {{ new Date(entry[0].release).getFullYear() }}
   #firstpart
-    .widget.image
+    .widget.image(v-if="photos")
       imagePrev(:photos="photos")
     div
       h2 force
@@ -68,7 +73,7 @@ article
             .subvalues
               p(v-if="entry[0].initialA !== 0 && entry[0].initialA !== null") ± {{ entry[0].initialA }}
               p(v-else) ± --
-              p(v-if="entry[0].forceUnit === 0") gf
+              p(v-if="entry[0].forceUnit === false") gf
               p(v-else) cN
           .row(v-else)
             p.mainvalue --
@@ -82,7 +87,7 @@ article
             .subvalues
               p(v-if="entry[0].pressureA !== 0 && entry[0].pressureA !== null") ± {{ entry[0].pressureA }}
               p(v-else) ± --
-              p(v-if="entry[0].forceUnit === 0") gf
+              p(v-if="entry[0].forceUnit === false") gf
               p(v-else) cN
           .row(v-else)
             p.mainvalue --
@@ -98,7 +103,7 @@ article
                 v-if="entry[0].actuationA !== 0 && entry[0].actuationA !== null"
               ) ± {{ entry[0].actuationA }}
               p(v-else) ± --
-              p(v-if="entry[0].forceUnit === 0") gf
+              p(v-if="entry[0].forceUnit === false") gf
               p(v-else) cN
           .row(v-else)
             p.mainvalue --
@@ -112,7 +117,7 @@ article
             .subvalues
               p(v-if="entry[0].bottomA !== 0 && entry[0].bottomA !== null") ± {{ entry[0].bottomA }}
               p(v-else) ± --
-              p(v-if="entry[0].forceUnit === 0") gf
+              p(v-if="entry[0].forceUnit === false") gf
               p(v-else) cN
           .row(v-else)
             p.mainvalue --
@@ -182,13 +187,28 @@ article
       //- .widget
       //-   p more
       h2 models
-      models(:entry="entry", :models="models", :modelGroups="modelGroups")
+      modelsList(:entry="entry", :models="models", :modelGroups="modelGroups")
 
     div
       h2 build
       .widget
         build(
+          v-if="photos[0]"
           :img="photos.filter((i) => i.type === 1)[0].src",
+          :topM="entry[0].topM",
+          :topC="entry[0].topC",
+          :stemC="entry[0].stemC",
+          :stemM="entry[0].stemM",
+          :contactC="entry[0].contactC",
+          :contactM="entry[0].contactM",
+          :springC="entry[0].springC",
+          :springM="entry[0].springM",
+          :bottomM="entry[0].bottomM",
+          :bottomC="entry[0].bottomC"
+        )
+        build(
+          v-else
+          :img="NULL",
           :topM="entry[0].topM",
           :topC="entry[0].topC",
           :stemC="entry[0].stemC",
@@ -214,8 +234,10 @@ article
     #sources
       h2 sources
       p(v-for="i in sources.name.length")
-        a(v-if="sources.link[i-1] === 'DATASHEET'" target="_blank" rel="nofollow noopener" href="https://keycomp.co/404") {{ sources.name[i-1] }}
-        a(v-else-if="sources.link[i-1] === 'DATABASE'" target="_blank" rel="nofollow noopener" href="https://keycomp.co/database") {{ sources.name[i-1] }}
+        a(v-if="sources.link[i-1] === 'DATASHEET'" target="_blank" rel="nofollow noopener" :href="entry[0].datasheets[0]") {{ sources.name[i-1] }}
+        a(v-else-if="sources.link[i-1] === 'DATASHEET1'" target="_blank" rel="nofollow noopener" :href="entry[0].datasheets[1]") {{ sources.name[i-1] }}
+        a(v-else-if="sources.link[i-1] === 'DATASHEET2'" target="_blank" rel="nofollow noopener" :href="entry[0].datasheets[2]") {{ sources.name[i-1] }}
+        a(v-else-if="sources.link[i-1] === 'DATABASE'" target="_blank" href="/database") {{ sources.name[i-1] }}
         a(v-else target="_blank" rel="nofollow noopener" :href="sources.link[i-1]") {{ sources.name[i-1] }}
         |
         | -
@@ -224,17 +246,17 @@ article
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { useRoute } from "vue-router";
-import getElement from "@/composables/getElement";
+import { defineComponent } from 'vue';
+import { useRoute } from 'vue-router';
+import getElement from '@/composables/getElement';
 
-import forceGraph from "@/components/force-graph.vue";
-import imagePrev from "@/components/image-prev.vue";
-import build from "@/components/build.vue";
-import models from "@/components/models.vue";
+import forceGraph from '@/components/force-graph';
+import imagePrev from '@/components/image-prev';
+import build from '@/components/build';
+import modelsList from '@/components/models';
 
 export default defineComponent({
-  name: "switch-info",
+  name: 'switch-info',
   setup() {
     const route = useRoute();
     const {
@@ -248,72 +270,53 @@ export default defineComponent({
       fetchSwitch,
       fetchSwitchPhotos,
       fetchSwitchSources,
-      fetchSwitchModels
+      fetchSwitchModels,
     } = getElement();
+    console.log(photos);
     switchName.value = route.params.switchname;
-    fetchSwitch();
+    fetchSwitch().then(() => {
+      document.documentElement.style.setProperty('--foreground', entry.value[0].topC[2]);
+      document.documentElement.style.setProperty('--accent', entry.value[0].stemC[2]);
+    });
     fetchSwitchPhotos();
     fetchSwitchSources();
     fetchSwitchModels();
-    return { entry, photos, sources, models, modelGroups, error };
+    return {
+      entry, photos, sources, models, modelGroups, error,
+    };
   },
   components: {
     forceGraph,
     imagePrev,
     build,
-    models
+    modelsList,
   },
   data() {
     return {
       monthsNames: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "June",
-        "July",
-        "Aug",
-        "Sept",
-        "Oct",
-        "Nov",
-        "Dec"
-      ]
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'June',
+        'July',
+        'Aug',
+        'Sept',
+        'Oct',
+        'Nov',
+        'Dec',
+      ],
     };
-  }
+  },
 });
 </script>
 
 <style lang="scss">
-:root {
-  --foreground: black;
-  --accent: red; //TODO
-  --border: #c7c7c7;
-  --background: white;
-
-  --pico-spacing: 8px;
-  --nano-spacing: 16px;
-  --mili-spacing: 24px;
-  --normal-spacing: 32px;
-  --kilo-spacing: 40px;
-  --giga-spacing: 56px;
-
-  --font: "Barlow";
-
-  --button: 500 16px var(--font);
-  --title3-bold: 600 20px var(--font);
-  --title3: normal 20px var(--font);
-  --title2: normal 22px var(--font);
-  --xlargetitle: normal 54px var(--font);
-}
-body {
-  background: var(--background);
-  color: var(--foreground);
-}
-
-article{ 
+article {
   margin: auto;
-  max-width: 1237px;}
+  max-width: calc(1165px + 4*var(--kilo-spacing));
+}
 
 #firstpart,
 #secondpart {
@@ -324,7 +327,8 @@ article{
 
 #firstpart {
   grid-template-columns: auto minmax(min-content, max-content);
-  grid-template-rows: 242px 242px;
+  // line below is so long for the purpouse of readability
+  grid-template-rows: repeat(2, minmax(100px, calc(2*91px + 2*2px + 2*var(--nano-spacing) + var(--pico-spacing) + 1px + var(--pico-spacing) + 24px)));
   .widget.image {
     grid-row: 1/-1;
   }
@@ -334,6 +338,10 @@ article{
   grid-template-columns: 295px 435px 435px;
   .sidebar {
     grid-row: 1/5;
+    width: 295px;
+    .widget {
+      margin-bottom: var(--nano-spacing);
+    }
   }
   #reviews,
   #sources {
@@ -352,6 +360,7 @@ p {
 h2,
 h3 {
   font: var(--title3-bold);
+      margin-bottom: var(--pico-spacing);
 }
 
 a {
@@ -367,9 +376,10 @@ a {
   display: flex;
   flex-flow: row wrap;
   margin-bottom: var(--kilo-spacing);
-  > h1 {
-    margin-right: var(--giga-spacing);
-  }
+  // TODO uncomment when metascore is implemented
+  // > h1 {
+  //   margin-right: var(--giga-spacing);
+  // }
   > div {
     display: flex;
     flex-flow: row nowrap;
@@ -382,6 +392,7 @@ a {
 .subvalues {
   font: var(--title3);
   margin: var(--pico-spacing);
+  margin-right: 0;
   p:first-child {
     margin-bottom: 1px;
   }
@@ -412,13 +423,23 @@ a {
   border: 2px solid var(--border);
   border-radius: var(--nano-spacing);
   padding: var(--nano-spacing);
-}
 
-.widget.image {
+&.image {
   border: 2px solid var(--border);
   border-radius: var(--nano-spacing);
   overflow: hidden;
   padding: unset;
+}
+&.stats > div:nth-child(-n+2) {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--pico-spacing);
+}
+&.stats > div:nth-child(odd) {
+    border-right: 1px solid var(--border);
+}
+&.stats > div:nth-child(even) {
+    padding-left: var(--pico-spacing);
+}
 }
 
 .row {

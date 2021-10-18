@@ -8,32 +8,66 @@ main
     .weightprop Bottom-out
     .distanceprop Pre-travel
     .distanceprop Total-travel
+    //- .price Price
   div
-    .item(v-for="(item, index) in entries", :key="item.id")
+    router-link.item(v-for="(item, index) in listOfSwitches", :key="item.id", :to="item.brand[0] + '-' + item.name.split(' ').join('-')" )
       .name {{ item.brand[0] }} {{ item.name }}
-      .type(v-if="item.type === 0") Linear
-      .type(v-if="item.type === 1") Tactile
-      .type(v-if="item.type === 2") Clicky
-      .mount(v-if="item.mount === 0") Plate
-      .mount(v-if="item.mount === 1") PCB
-      .mount(v-if="item.mount === 2") PCB or Plate
-      .weightprop {{ item.force.pressure[0] > item.force.actuation[0] ? item.force.pressure[0] : item.force.actuation[0] }} {{ item.force.unit ? 'cN' : 'g' }}
-      .weightprop {{ item.force.actuation[0] }} {{ item.force.unit ? 'cN' : 'g' }}
-      .distanceprop {{ item.travel.actuation[0] }} mm
-      .distanceprop {{ item.travel.total[0] }} mm
+      .type(v-if="item.travel === 0") Linear
+      .type(v-else-if="item.travel === 1") Tactile
+      .type(v-else-if="item.travel === 2") Clicky
+      .type(v-else)="<unknown>"
+      .mount(v-if="item.mount === 1") Plate
+      .mount(v-else-if="item.mount === 2") PCB
+      .mount(v-else-if="item.mount === 3") PCB or Plate
+      .mount(v-else)="<unknown>"
+      .weightprop(v-if="item.pressure || item.actuation") {{ item.pressure > item.actuation ? item.pressure : item.actuation }} {{ item.forceUnit ? 'cN' : 'g' }}
+      .weightprop(v-else) -- {{ item.forceUnit ? 'cN' : 'g' }}
+      .weightprop(v-if="item.bottom") {{ item.bottom }} {{ item.forceUnit ? 'cN' : 'g' }}
+      .weightprop(v-else) -- {{ item.forceUnit ? 'cN' : 'g' }}
+      .distanceprop(v-if="item.preTravel") {{ item.preTravel }} mm
+      .distanceprop(v-else) -- mm
+      .distanceprop(v-if="item.totalTravel") {{ item.totalTravel }} mm
+      .distanceprop(v-else) -- mm
+      //- .price --
 </template>
 
 <script>
-import getElements from "@/composables/getElements";
+import getElement from '@/composables/getElement';
+
 export default {
+  props: {
+    options: Object
+  },
   data() {
     return { items: {} };
   },
   setup() {
-    const { entries, error, load } = getElements();
-    load();
-    console.log(entries);
-    return { entries, error };
+    const { page, fetchSwitches } = getElement();
+    fetchSwitches();
+    return { page };
+  },
+  computed: {
+    listOfSwitches: function () {
+      function type(options, element) {
+        return options.type.includes(element.travel.toString())
+      }
+      function mount(options, element) {
+        let sum = 0
+        for (let i = 0; i < options.mount.length; i++) {
+          sum = sum + parseInt(options.mount[i])
+        }
+        console.log(sum)
+        return element.mount === sum || element.mount === 3
+      }
+      function profile(options, element) {
+        return options.profile.includes(element.profile.toString())
+      }
+      return this.page.filter(element => {
+        return (this.options.type.length ? type(this.options, element) : true) &&
+          (this.options.mount.length ? mount(this.options, element) : true) &&
+          (this.options.profile.length ? profile(this.options, element) : true)
+      });
+    }
   }
 };
 </script>

@@ -1,6 +1,5 @@
 <template lang="pug">
-#build
-  img#buildImage(:src="img")
+#build(:style="'background: url('+ img + ') 0% center / contain no-repeat;'")
   #buildProps
     .buildProp
       .line
@@ -30,7 +29,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
+
 export default defineComponent({
   props: {
     img: String,
@@ -43,8 +43,8 @@ export default defineComponent({
     springC: Array,
     springM: Array,
     bottomM: Array,
-    bottomC: Array
-  }
+    bottomC: Array,
+  },
 });
 </script>
 
@@ -55,6 +55,8 @@ img#buildImage {
 #build {
   display: flex;
   flex-flow: row nowrap;
+  justify-content: flex-end;
+  height: 288px;
   & > #buildProps {
     display: flex;
     justify-content: center;
