@@ -1,6 +1,6 @@
 # keycomp
 
-Open-source and open-data/open-knowledge site for comparing mechanical keyboard switches.
+Open-source and open-data/open-knowledge web app for comparing mechanical keyboard switches.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/7362eb04-1bdc-4c00-bdd3-f72eac8626b8/deploy-status)](https://app.netlify.com/sites/keycomp/deploys)
 
