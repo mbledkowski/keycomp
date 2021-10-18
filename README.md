@@ -1,4 +1,4 @@
-# keycomp
+# [keycomp.co](https://keycomp.co)
 
 Open-source and open-data/open-knowledge web app for comparing mechanical keyboard switches.
 
@@ -21,6 +21,7 @@ Netlify, Supabase ( postgreSQL, Supabase Storage)
 - \[[keycomp_reputation](https://github.com/mbledkowski/keycomp_reputation)\] - used for calculating switch metascore 
 - \[[keycomp_prices](https://github.com/mbledkowski/keycomp)\](TBA)
 - \[[keycomp_documentation_archive](https://github.com/mbledkowski/keycomp_documentation_archive)\](WIP)
+
 ## License ([SPDX](https://spdx.org/licenses/))
 - keycomp - [GPL-3.0-or-later](https://spdx.org/licenses/GPL-3.0-or-later.html)
 - [keycomp_reputation](https://github.com/mbledkowski/keycomp_reputation) - [GPL-3.0-or-later](https://spdx.org/licenses/GPL-3.0-or-later.html)
