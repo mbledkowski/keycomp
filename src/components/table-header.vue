@@ -45,8 +45,6 @@ div
       label(for="normal") normal
       input(type="checkbox" id="nonstandard" value="2" v-model="options.profile")
       label(for="nonstandard") non-standard
-
-  p {{options}}
 </template>
 
 <script lang="ts">
