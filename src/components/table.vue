@@ -1,6 +1,6 @@
 <template lang="pug">
 main
-  #tableHeader
+  #tableBar
     .name Name
     .type Type
     .mount Mount
@@ -24,37 +24,37 @@ main
       .weightprop(v-else) -- {{ item.forceUnit ? 'cN' : 'g' }}
       .weightprop(v-if="item.bottom") {{ item.bottom }} {{ item.forceUnit ? 'cN' : 'g' }}
       .weightprop(v-else) -- {{ item.forceUnit ? 'cN' : 'g' }}
-      .distanceprop(v-if="item.preTravel") {{ item.preTravel }} mm
+      .distanceprop(v-if="item.preTravel") {{ item.preTravel/10 }} mm
       .distanceprop(v-else) -- mm
-      .distanceprop(v-if="item.totalTravel") {{ item.totalTravel }} mm
+      .distanceprop(v-if="item.totalTravel") {{ item.totalTravel/10 }} mm
       .distanceprop(v-else) -- mm
       //- .price --
 </template>
 
 <script>
-import getElement from '@/composables/getElement';
+import getElement from '@/composables/getElement'
 
 export default {
   props: {
-    options: Object
+    options: Object,
   },
   data() {
-    return { items: {} };
+    return { items: {} }
   },
   setup() {
-    const { page, fetchSwitches } = getElement();
-    fetchSwitches();
-    return { page };
+    const { page, fetchSwitches } = getElement()
+    fetchSwitches()
+    return { page }
   },
   computed: {
-    listOfSwitches: function () {
+    listOfSwitches() {
       function type(options, element) {
         return options.type.includes(element.travel.toString())
       }
       function mount(options, element) {
         let sum = 0
         for (let i = 0; i < options.mount.length; i++) {
-          sum = sum + parseInt(options.mount[i])
+          sum += parseInt(options.mount[i], 10)
         }
         console.log(sum)
         return element.mount === sum || element.mount === 3
@@ -62,14 +62,12 @@ export default {
       function profile(options, element) {
         return options.profile.includes(element.profile.toString())
       }
-      return this.page.filter(element => {
-        return (this.options.type.length ? type(this.options, element) : true) &&
-          (this.options.mount.length ? mount(this.options, element) : true) &&
-          (this.options.profile.length ? profile(this.options, element) : true)
-      });
-    }
-  }
-};
+      return this.page.filter((element) => (this.options.type.length ? type(this.options, element) : true)
+          && (this.options.mount.length ? mount(this.options, element) : true)
+          && (this.options.profile.length ? profile(this.options, element) : true))
+    },
+  },
+}
 </script>
 
 <!-- "scoped" attribute to limit CSS to this component only -->
@@ -77,28 +75,29 @@ export default {
 main {
   display: flex;
   flex-flow: column nowrap;
-  #tableHeader,
-  .item {
-    display: flex;
-    flex-flow: row nowrap;
+  #tableBar, .item {
+    display: grid;
+    grid-template-columns: 5fr repeat(2, 2fr) repeat(4, 1fr);
     div {
       border: 2px dotted lightgray;
       display: flex;
       padding: 0 10px;
+      white-space: nowrap;
+      overflow: hidden;
     }
-    .name {
-      width: 40%;
-    }
-    .type {
-      width: 16%;
-    }
-    .mount {
-      width: 16%;
-    }
-    .weightprop,
-    .distanceprop {
-      width: 8%;
-    }
+    // .name {
+    //   width: 40%;
+    // }
+    // .type {
+    //   width: 16%;
+    // }
+    // .mount {
+    //   width: 16%;
+    // }
+    // .weightprop,
+    // .distanceprop {
+    //   width: 8%;
+    // }
   }
 }
 </style>
