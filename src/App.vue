@@ -1,7 +1,7 @@
 <template lang="pug">
 header
   .container
-    a(href="/")
+    router-link(to="/")
       img(src='/img/logo/keycomp.svg', alt='logo', height='24')
       .version alpha
     //- nav
@@ -19,11 +19,11 @@ class CatTemplate {
   dir: string;
 
   constructor(name: string, dir?: string) {
-    this.name = name;
+    this.name = name
     if (dir === undefined) {
-      this.dir = `/${name}`;
+      this.dir = `/${name}`
     } else {
-      this.dir = dir;
+      this.dir = dir
     }
   }
 }
@@ -42,12 +42,15 @@ export default {
         // new CatTemplate('case'),
         // new CatTemplate('plate'),
       ],
-    };
+    }
   },
-};
+}
 </script>
 <style lang="scss">
 :root {
+  --keycomp-a: #14294B;
+  --keycomp-b: #E94560;
+
   --foreground: black;
   --accent: red;
   --border: #c7c7c7;
@@ -55,7 +58,7 @@ export default {
 
   --foreground-dark: white;
   --accent-dark: red; //TODO
-  --border-dark: #c7c7c7;
+  --border-dark: #7A7A7A;
   --background-dark: #0a0a0f;
 
   --pico-spacing: 8px;
@@ -93,14 +96,17 @@ header {
     width: 100%;
     max-width: 1920px;
   > a {
+    display: flex;
+    flex-flow: row nowrap;
     > img {
     margin: auto auto auto var(--mili-spacing);
     filter: invert(1);
     }
     > .version {
-      position:absolute;
-      top: 26px;
-      left: 152px;
+      position: relative;
+      height: fit-content;
+      top: 12px;
+      left: 6px;
       color: var(--background);
       background: var(--foreground);
       padding: 0 4px;
@@ -113,7 +119,7 @@ header {
   }
   > nav {
     padding: 4px;
-    border: #5f2400 solid;
+    border: var(--accent) solid;
     border-radius: 14px;
     > ul {
       list-style-type: none;
@@ -130,7 +136,7 @@ header {
       text-decoration: none;
       border-radius: 8px;
       &.router-link-exact-active {
-        background: #5f2400;
+        background: var(--accent);
       }
     }  }
   }

@@ -193,22 +193,7 @@ article(v-if="entry[0]")
       h2 build
       .widget
         build(
-          v-if="photos[0]"
-          :img="photos.filter((i) => i.type === 1)[0].src",
-          :topM="entry[0].topM",
-          :topC="entry[0].topC",
-          :stemC="entry[0].stemC",
-          :stemM="entry[0].stemM",
-          :contactC="entry[0].contactC",
-          :contactM="entry[0].contactM",
-          :springC="entry[0].springC",
-          :springM="entry[0].springM",
-          :bottomM="entry[0].bottomM",
-          :bottomC="entry[0].bottomC"
-        )
-        build(
-          v-else
-          :img="NULL",
+          :img="buildImage",
           :topM="entry[0].topM",
           :topC="entry[0].topC",
           :stemC="entry[0].stemC",
@@ -246,22 +231,21 @@ article(v-if="entry[0]")
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import { useRoute } from 'vue-router';
-import getElement from '@/composables/getElement';
+import { defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
+import getElement from '@/composables/getElement'
 
-import forceGraph from '@/components/force-graph';
-import imagePrev from '@/components/image-prev';
-import build from '@/components/build';
-import modelsList from '@/components/models';
+import forceGraph from '@/components/force-graph'
+import imagePrev from '@/components/image-prev'
+import build from '@/components/build'
+import modelsList from '@/components/models'
 
 export default defineComponent({
   name: 'switch-info',
   setup() {
-    const route = useRoute();
+    const route = useRoute()
     const {
       entry,
-      error,
       photos,
       sources,
       models,
@@ -271,19 +255,19 @@ export default defineComponent({
       fetchSwitchPhotos,
       fetchSwitchSources,
       fetchSwitchModels,
-    } = getElement();
-    console.log(photos);
-    switchName.value = route.params.switchname;
+    } = getElement()
+    console.log(photos)
+    switchName.value = route.params.switchname
     fetchSwitch().then(() => {
-      document.documentElement.style.setProperty('--foreground', entry.value[0].topC[2]);
-      document.documentElement.style.setProperty('--accent', entry.value[0].stemC[2]);
-    });
-    fetchSwitchPhotos();
-    fetchSwitchSources();
-    fetchSwitchModels();
+      document.documentElement.style.setProperty('--foreground', entry.value[0].topC[2])
+      document.documentElement.style.setProperty('--accent', entry.value[0].stemC[2])
+    })
+    fetchSwitchPhotos()
+    fetchSwitchSources()
+    fetchSwitchModels()
     return {
-      entry, photos, sources, models, modelGroups, error,
-    };
+      entry, photos, sources, models, modelGroups,
+    }
   },
   components: {
     forceGraph,
@@ -291,9 +275,9 @@ export default defineComponent({
     build,
     modelsList,
   },
-  data() {
-    return {
-      monthsNames: [
+  computed: {
+    monthsNames() {
+      return [
         'Jan',
         'Feb',
         'Mar',
@@ -306,10 +290,11 @@ export default defineComponent({
         'Oct',
         'Nov',
         'Dec',
-      ],
-    };
+      ]
+    },
+    buildImage() { return this.photos[0] ? this.photos.filter((i) => i.type === 1)[0].src : 'NULL' },
   },
-});
+})
 </script>
 
 <style lang="scss">

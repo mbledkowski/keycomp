@@ -2,8 +2,8 @@
 h1 {{errorList[0][errorIndex] }} {{errorList[1][errorIndex]}}
 </template>
 <script>
-import { ref, defineComponent } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref, defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'error',
@@ -90,10 +90,10 @@ export default defineComponent({
       'Loop Detected',
       'Not Extended',
       'Network Authentication Required',
-    ]]);
-    const route = useRoute();
-    const errorIndex = errorList.value[0].indexOf(route.params.error);
-    return { errorIndex, errorList };
+    ]])
+    const route = useRoute()
+    const errorIndex = errorList.value[0].indexOf(route.params.error)
+    return { errorIndex, errorList }
   },
-});
+})
 </script>

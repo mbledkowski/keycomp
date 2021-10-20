@@ -1,4 +1,4 @@
-var OFF = 0, WARN = 1, ERROR = 2
+const OFF = 0, WARN = 1, ERROR = 2
 
 module.exports = {
   root: true,
@@ -14,13 +14,16 @@ module.exports = {
     ecmaVersion: 2020,
     ecmaFeatures: {
       jsx: false
-  }
+    }
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    "max-len": [2, 168, 2, {"ignoreComments": true, "ignoreUrls": true, "ignorePattern": "^\\s*var\\s.+=\\s*require\\s*\\("}],
+    "max-len": [WARN, 180, 2, { "ignoreComments": true, "ignoreUrls": true, "ignorePattern": "^\\s*var\\s.+=\\s*require\\s*\\(" }],
     "semi": [ERROR, "never"],
-    "import/extensions": [ERROR, "never"],
+    "no-plusplus": OFF,
+    "import/extensions": OFF,
+    "import/no-unresolved": OFF,
+    "prefer-const": WARN,
   },
 };

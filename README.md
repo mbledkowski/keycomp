@@ -18,8 +18,8 @@ Netlify, Supabase ( postgreSQL, Supabase Storage)
 - `yarn lint` - Lints and fixes files
 
 ## Projects related
-- \[[keycomp_graphics](https://github.com/mbledkowski/keycomp_graphics)\] - graphics created during development process 
-- \[[keycomp_reputation](https://github.com/mbledkowski/keycomp_reputation)\] - used for calculating switch metascore 
+- \[[keycomp_graphics](https://github.com/mbledkowski/keycomp_graphics)\] - graphics created during development process
+- \[[keycomp_reputation](https://github.com/mbledkowski/keycomp_reputation)\] - used for calculating switch metascore
 - \[[keycomp_prices](https://github.com/mbledkowski/keycomp)\](TBA)
 - \[[keycomp_documentation_archive](https://github.com/mbledkowski/keycomp_documentation_archive)\](WIP)
 

@@ -3,7 +3,7 @@ canvas#myChart(width="399", height="288")
 //- canvas#myChart(width="400", height="300")
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, PropType } from 'vue';
+import { defineComponent } from 'vue'
 
 import {
   Chart,
@@ -14,7 +14,7 @@ import {
   Decimation,
   Legend,
   Tooltip,
-} from 'chart.js';
+} from 'chart.js'
 
 Chart.register(
   LineElement,
@@ -24,7 +24,7 @@ Chart.register(
   Decimation,
   Legend,
   Tooltip,
-);
+)
 
 export default defineComponent({
   props: {
@@ -34,35 +34,36 @@ export default defineComponent({
   },
   mounted() {
     if (!this.chartdata) {
-      console.error('No graph data!');
-      return null;
+      console.error('No graph data!')
+      return
     }
-    const canvas = <HTMLCanvasElement>document.getElementById('myChart');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById('myChart') as HTMLCanvasElement
+    const ctx = canvas.getContext('2d')
 
     if (!(ctx instanceof CanvasRenderingContext2D)) {
-      throw new Error('Failed to get 2D context');
+      throw new Error('Failed to get 2D context')
     }
 
-    const pressurePointRadius: number[] = [];
-    const resetPointRadius: number[] = [];
+    const pressurePointRadius: number[] = []
+    const resetPointRadius: number[] = []
 
     for (let i = 0; i < this.chartdata.pressure.data.length; i++) {
       if (i === this.chartdata.pressure.point) {
-        pressurePointRadius[i] = 6;
+        pressurePointRadius[i] = 6
       } else {
-        pressurePointRadius[i] = 0;
+        pressurePointRadius[i] = 0
       }
     }
 
     for (let i = 0; i < this.chartdata.reset.data.length; i++) {
       if (i === this.chartdata.reset.point) {
-        resetPointRadius[i] = 6;
+        resetPointRadius[i] = 6
       } else {
-        resetPointRadius[i] = 0;
+        resetPointRadius[i] = 0
       }
     }
 
+    // eslint-disable-next-line no-new
     new Chart(ctx, {
       type: 'scatter',
       data: {
@@ -98,9 +99,9 @@ export default defineComponent({
         },
         plugins: { legend: { position: 'bottom' } },
       },
-    });
+    })
   },
-});
+})
 </script>
 
 <style lang="scss">

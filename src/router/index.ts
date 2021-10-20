@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import home from '../views/switches.vue';
-import error from '../views/error.vue';
-import switchInfo from '../views/switch-info.vue';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import home from '../views/switches.vue'
+import error from '../views/error.vue'
+import switchInfo from '../views/switch-info.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -86,11 +86,11 @@ const routes: Array<RouteRecordRaw> = [
   //   name: 'cable',
   //   component: () => import('../views/cable.vue'),
   // },
-];
+]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-});
+})
 
-export default router;
+export default router

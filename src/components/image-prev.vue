@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
@@ -21,10 +21,10 @@ export default defineComponent({
   },
   data() {
     return {
-      activeImage: 2,
-    };
+      activeImage: 0,
+    }
   },
-});
+})
 </script>
 <style lang="scss" scoped>
 #image-prev {

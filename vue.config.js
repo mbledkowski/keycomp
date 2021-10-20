@@ -1,7 +1,7 @@
 module.exports = {
   pwa: {
     name: 'keycomp',
-    themeColor: '#000000',
+    themeColor: '#14294B',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',

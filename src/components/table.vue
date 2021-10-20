@@ -1,6 +1,7 @@
 <template lang="pug">
 main
   #tableBar
+    //- .image 🖼
     .name Name
     .type Type
     .mount Mount
@@ -11,6 +12,7 @@ main
     //- .price Price
   div
     router-link.item(v-for="(item, index) in listOfSwitches", :key="item.id", :to="item.brand[0] + '-' + item.name.split(' ').join('-')" )
+      //- .image
       .name {{ item.brand[0] }} {{ item.name }}
       .type(v-if="item.travel === 0") Linear
       .type(v-else-if="item.travel === 1") Tactile
@@ -75,29 +77,49 @@ export default {
 main {
   display: flex;
   flex-flow: column nowrap;
+  #tableBar {
+    font: var(--button);
+    text-transform: lowercase;
+    border-radius: var(--pico-spacing);
+    padding: var(--pico-spacing);
+    background: var(--keycomp-a);
+    margin-bottom: var(--nano-spacing);
+  }
+  .item{
+    font: var(--button);
+    border-radius: 4px;
+    padding: 0 var(--pico-spacing) 0 calc(var(--pico-spacing) - 4px);
+    border-left: 4px transparent solid;
+    &:hover{
+      border-left: 4px var(--keycomp-b) solid;
+    }
+    &:focus{
+      border-left: 4px var(--keycomp-b) solid;
+      background: rgba(255,255,255,.1);
+    }
+  }
+
   #tableBar, .item {
     display: grid;
-    grid-template-columns: 5fr repeat(2, 2fr) repeat(4, 1fr);
+    grid-template-columns: /*minmax(36px, 52px)*/ 7fr repeat(2, 3fr) repeat(4, 2fr);
+    margin-left: var(--pico-spacing);
+    margin-right: var(--pico-spacing);
     div {
-      border: 2px dotted lightgray;
       display: flex;
+      &:not(:last-child){
+        border-right: 2px var(--border) solid;
+      }
       padding: 0 10px;
       white-space: nowrap;
       overflow: hidden;
     }
-    // .name {
-    //   width: 40%;
-    // }
-    // .type {
-    //   width: 16%;
-    // }
-    // .mount {
-    //   width: 16%;
-    // }
-    // .weightprop,
-    // .distanceprop {
-    //   width: 8%;
-    // }
+  }
+}
+@media (prefers-color-scheme: dark) {
+  main {
+    #tableBar div:not(:last-child), .item div:not(:last-child){
+      border-right: 2px var(--border-dark) solid;
+    }
   }
 }
 </style>

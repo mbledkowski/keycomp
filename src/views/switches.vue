@@ -5,10 +5,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import tableHeader from '@/components/table-header.vue';
-import itemTable from '@/components/table.vue'; // @ is an alias to /src
-import getElement from '@/composables/getElement';
+import { defineComponent } from 'vue'
+import tableHeader from '@/components/table-header.vue'
+import itemTable from '@/components/table.vue' // @ is an alias to /src
 
 export default defineComponent({
   name: 'home',
@@ -21,11 +20,11 @@ export default defineComponent({
       options: {
         type: [],
         mount: [],
-        profile: []
-      }
+        profile: [],
+      },
     }
-  }
-});
+  },
+})
 </script>
 
 <style lang="scss">

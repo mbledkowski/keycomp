@@ -5,7 +5,7 @@ div
   //-   .hor-list
   //-     p Cherry
   section
-    p type:
+    p type
     .hor-list
       input(type="checkbox" id="linear" value="0" v-model="options.type")
       label(for="linear") linear
@@ -14,7 +14,7 @@ div
       input(type="checkbox" id="clicky" value="2" v-model="options.type")
       label(for="clicky") clicky
   section
-    p mount:
+    p mount
     .hor-list
       input(type="checkbox" id="plate" value="1" v-model="options.mount")
       label(for="plate") Plate (3-pin)
@@ -48,22 +48,18 @@ div
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
-    options: Object
+    options: Object,
   },
-  methods: {
-    selectType: function (checkbox: object) {
-
-  }}
-});
+})
 </script>
 
 <style scoped lang="scss">
 p {
-  font-size: 16px;
+  font: var(--button);
   margin: 0;
 }
 div,
@@ -72,14 +68,22 @@ section > .hor-list {
   flex-flow: row wrap;
 }
 section {
-  margin: 10px;
+  margin: var(--nano-spacing);
   > .hor-list{
     > input {
       display:none;
     }
     > label {
-    font-size: 20px;
-    margin: 0 10px 0 0;
-    }}
+      font: var(--title2);
+      margin: 0 10px 0 0;
+      user-select: none;
+    }
+    > input[type="checkbox"]:checked+label{
+      background-image: linear-gradient(to left, var(--keycomp-b) 100%, transparent 0%);
+      background-position: 0 1.04em;
+      background-repeat: repeat-x;
+      background-size: 8px 3px;
+    }
+  }
 }
 </style>
