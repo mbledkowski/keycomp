@@ -1,3 +1,5 @@
+var OFF = 0, WARN = 1, ERROR = 2
+
 module.exports = {
   root: true,
   env: {
@@ -17,6 +19,7 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    "import/extensions": ["error", "never"]
+    "semi": [ERROR, "never"],
+    "import/extensions": [ERROR, "never"],
   },
 };
