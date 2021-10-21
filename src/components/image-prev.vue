@@ -26,7 +26,7 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 #image-prev {
   transition: transform 0.1s ease-in-out 0s;
   display: flex;

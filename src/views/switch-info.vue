@@ -177,18 +177,6 @@ article(v-if="entry[0]")
               p --
           p total-travel
   #secondpart
-    .sidebar
-      //- h2 prices
-      //- .widget
-      //-   table
-      //-   p links might be affiliate
-      //-   p more
-      //- h2 price history
-      //- .widget
-      //-   p more
-      h2 models
-      modelsList(:entry="entry", :models="models", :modelGroups="modelGroups")
-
     div
       h2 build
       .widget
@@ -212,8 +200,22 @@ article(v-if="entry[0]")
           :chartdata="entry[0].graphs",
           :firstColor="entry[0].stemC[2]",
           :secondColor="secondColor"
+          :foregroundColor="foregroundColor"
           :borderColor="borderColor"
         )
+    .sidebar
+      // TODO
+      //- h2 prices
+      //- .widget
+      //-   table
+      //-   p links might be affiliate
+      //-   p more
+      //- h2 price history
+      //- .widget
+      //-   p more
+      h2 models
+      modelsList(:entry="entry", :models="models", :modelGroups="modelGroups")
+    // TODO
     //- #reviews
     //-   h2 reviews
     //-   //- .widget(v-for="")
@@ -307,6 +309,15 @@ export default defineComponent({
       }
       return result
     },
+    foregroundColor() {
+      let result = ''
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        result = getComputedStyle(document.documentElement).getPropertyValue('--foreground-dark')
+      } else {
+        result = getComputedStyle(document.documentElement).getPropertyValue('--foreground')
+      }
+      return result
+    },
     borderColor() {
       let result = ''
       if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -316,6 +327,7 @@ export default defineComponent({
       }
       return result
     },
+
   },
 })
 </script>
@@ -338,17 +350,25 @@ article {
   // line below is so long for the purpouse of readability
   grid-template-rows: repeat(2, minmax(100px, calc(2*91px + 2*2px + 2*var(--nano-spacing) + var(--pico-spacing) + 1px + var(--pico-spacing) + 24px)));
   .widget.image {
+    max-height: 554px;
     grid-row: 1/-1;
   }
 }
 
 #secondpart {
   grid-template-columns: 295px 435px 435px;
+  div:nth-child(2) .widget{
+      min-width: 399px;
+  }
   .sidebar {
     grid-row: 1/5;
     width: 295px;
     .widget {
       margin-bottom: var(--nano-spacing);
+      height: min-content;
+      > div {
+        width: fit-content;
+      }
     }
   }
   #reviews,
@@ -474,6 +494,42 @@ a {
     font: var(--title3);
     > a {
       font: var(--title3-bold);
+    }
+  }
+}
+@media(max-width: 1326px) {
+  #firstpart, #secondpart {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+  #secondpart{
+    > div {
+      width: calc(50% - (var(--kilo-spacing)/2));
+      &.sidebar{
+        display: flex;
+        flex-flow: row wrap;
+        > h2 {
+          width: 100%;
+        }
+        > .widget {
+          display: grid;
+          width: calc(50% - (var(--kilo-spacing)/2) - (var(--nano-spacing)*2) - 4px);
+          &:not(:last-child) {
+            margin-right: var(--kilo-spacing);
+          }
+        }
+      }
+      &.sidebar, &.reviews, &#sources{
+        width: 100%;
+      }
+    }
+  }
+}
+@media(max-width: 997px) {
+  #secondpart{
+    > div {
+      width: 100%;
     }
   }
 }

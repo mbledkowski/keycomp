@@ -31,6 +31,7 @@ export default defineComponent({
     chartdata: Object,
     firstColor: String,
     secondColor: String,
+    foregroundColor: String,
     borderColor: String,
   },
   mounted() {
@@ -94,13 +95,13 @@ export default defineComponent({
         },
         scales: {
           x: {
-            type: 'linear', position: 'bottom', min: 0, max: 4, ticks: { color: this.borderColor }, grid: { color: this.borderColor },
+            type: 'linear', position: 'bottom', min: 0, max: 4, ticks: { color: this.foregroundColor }, grid: { color: this.borderColor },
           },
           y: {
-            min: 0, suggestedMax: 35, ticks: { color: this.borderColor }, grid: { color: this.borderColor },
+            min: 0, suggestedMax: 35, ticks: { color: this.foregroundColor }, grid: { color: this.borderColor },
           },
         },
-        plugins: { legend: { position: 'bottom', labels: { color: this.borderColor } } },
+        plugins: { legend: { position: 'bottom', labels: { color: this.foregroundColor } } },
       },
     })
   },
@@ -110,5 +111,6 @@ export default defineComponent({
 <style lang="scss">
 #myChart {
   aspect-ratio: unset !important;
+  max-height: 288px;
 }
 </style>

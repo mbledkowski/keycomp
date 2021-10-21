@@ -106,18 +106,23 @@ main {
     margin-right: var(--pico-spacing);
     div {
       display: flex;
-      &:not(:last-child){
-        border-right: 2px var(--border) solid;
-      }
       padding: 0 10px;
       white-space: nowrap;
       overflow: hidden;
     }
   }
+  .item div:not(:last-child){
+    border-right: 2px var(--border) solid;
+  }
+  #tableBar div{
+    color: var(--foreground-dark);
+    &:not(:last-child){
+    border-right: 2px var(--border-dark) solid;
+  }}
 }
 @media (prefers-color-scheme: dark) {
   main {
-    #tableBar div:not(:last-child), .item div:not(:last-child){
+    .item div:not(:last-child){
       border-right: 2px var(--border-dark) solid;
     }
   }
