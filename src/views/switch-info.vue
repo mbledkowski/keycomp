@@ -211,7 +211,8 @@ article(v-if="entry[0]")
         forceGraph(
           :chartdata="entry[0].graphs",
           :firstColor="entry[0].stemC[2]",
-          :secondColor="entry[0].topC[2]"
+          :secondColor="secondColor"
+          :borderColor="borderColor"
         )
     //- #reviews
     //-   h2 reviews
@@ -228,6 +229,7 @@ article(v-if="entry[0]")
         | -
         |
         | {{ sources.desc[i-1] }}
+    p {{secondColour}}
 </template>
 
 <script>
@@ -293,6 +295,27 @@ export default defineComponent({
       ]
     },
     buildImage() { return this.photos[0] ? this.photos.filter((i) => i.type === 1)[0].src : 'NULL' },
+    secondColor() {
+      let result = ''
+      if (this.entry[0].topC[0] === 'black' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        result = getComputedStyle(document.documentElement).getPropertyValue('--foreground-dark')
+      } else if (this.entry[0].topC[0] === 'white' && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        result = getComputedStyle(document.documentElement).getPropertyValue('--foreground')
+      } else {
+        // eslint-disable-next-line prefer-destructuring
+        result = this.entry[0].topC[2]
+      }
+      return result
+    },
+    borderColor() {
+      let result = ''
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        result = getComputedStyle(document.documentElement).getPropertyValue('--border-dark')
+      } else {
+        result = getComputedStyle(document.documentElement).getPropertyValue('--border')
+      }
+      return result
+    },
   },
 })
 </script>

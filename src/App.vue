@@ -53,12 +53,12 @@ export default {
 
   --foreground: black;
   --accent: red;
-  --border: #c7c7c7;
+  --border: #7A7A7A;
   --background: white;
 
   --foreground-dark: white;
   --accent-dark: red; //TODO
-  --border-dark: #7A7A7A;
+  --border-dark: #c7c7c7;
   --background-dark: #0a0a0f;
 
   --pico-spacing: 8px;

@@ -31,6 +31,7 @@ export default defineComponent({
     chartdata: Object,
     firstColor: String,
     secondColor: String,
+    borderColor: String,
   },
   mounted() {
     if (!this.chartdata) {
@@ -93,11 +94,13 @@ export default defineComponent({
         },
         scales: {
           x: {
-            type: 'linear', position: 'bottom', min: 0, max: 4,
+            type: 'linear', position: 'bottom', min: 0, max: 4, ticks: { color: this.borderColor }, grid: { color: this.borderColor },
           },
-          y: { min: 0, suggestedMax: 35 },
+          y: {
+            min: 0, suggestedMax: 35, ticks: { color: this.borderColor }, grid: { color: this.borderColor },
+          },
         },
-        plugins: { legend: { position: 'bottom' } },
+        plugins: { legend: { position: 'bottom', labels: { color: this.borderColor } } },
       },
     })
   },

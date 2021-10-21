@@ -63,6 +63,7 @@ export default defineComponent({
     border-radius: var(--nano-spacing);
     & > img {
       margin: auto;
+      height: 100%;
       max-height: 100%;
       max-width: 100%;
     }
