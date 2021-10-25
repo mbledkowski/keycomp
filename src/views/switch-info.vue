@@ -334,6 +334,7 @@ export default defineComponent({
 <style lang="scss">
 article {
   margin: auto;
+  width: 100%;
   max-width: calc(1165px + 4*var(--kilo-spacing));
 }
 
