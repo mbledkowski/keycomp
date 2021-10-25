@@ -1,6 +1,5 @@
 <template lang="pug">
-canvas#myChart(width="399", height="288")
-//- canvas#myChart(width="400", height="300")
+canvas#chart(width="399", height="288")
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -39,7 +38,7 @@ export default defineComponent({
       console.error('No graph data!')
       return
     }
-    const canvas = document.getElementById('myChart') as HTMLCanvasElement
+    const canvas = document.getElementById('chart') as HTMLCanvasElement
     const ctx = canvas.getContext('2d')
 
     if (!(ctx instanceof CanvasRenderingContext2D)) {
