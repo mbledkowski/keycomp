@@ -103,15 +103,22 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+body, body > #app {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
+
+header, footer {
+  min-height: var(--giga-spacing);
+}
 
 header {
   width: 100%;
-  height: var(--giga-spacing);
   display: flex;
   flex-flow: row nowrap;
   background: white;
-  // position: sticky;
-  // top:0;
   z-index: 144;
   > .container {
       display: flex;
@@ -165,7 +172,9 @@ header {
   }
 }
 
-footer > .container {
+footer {
+  margin-top: auto;
+  > .container {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -173,7 +182,7 @@ footer > .container {
   > span{
     margin: var(--nano-spacing);
   }
-}
+}}
 @media (prefers-color-scheme: dark) {
   body {
     background: var(--background-dark);

@@ -341,7 +341,7 @@ article {
 #secondpart {
   display: grid;
   grid-gap: var(--kilo-spacing);
-  margin: var(--kilo-spacing);
+  margin: var(--kilo-spacing) var(--kilo-spacing) 0 var(--kilo-spacing);
 }
 
 #firstpart {
@@ -362,7 +362,7 @@ article {
   .sidebar {
     grid-row: 1/5;
     width: 295px;
-    .widget {
+    .widget:not(:last-child) {
       margin-bottom: var(--nano-spacing);
       height: min-content;
       > div {
@@ -387,7 +387,7 @@ p {
 h2,
 h3 {
   font: var(--title3-bold);
-      margin-bottom: var(--pico-spacing);
+  margin-bottom: var(--pico-spacing);
 }
 
 a {
