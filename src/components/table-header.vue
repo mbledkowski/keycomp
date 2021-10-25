@@ -58,6 +58,10 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+div {
+  justify-content: center;
+}
+
 p {
   font: var(--button);
   margin: 0;
