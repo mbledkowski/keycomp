@@ -231,7 +231,6 @@ article(v-if="entry[0]")
         | -
         |
         | {{ sources.desc[i-1] }}
-    p {{secondColour}}
 </template>
 
 <script>
@@ -452,22 +451,22 @@ a {
   border-radius: var(--nano-spacing);
   padding: var(--nano-spacing);
 
-&.image {
-  border: 2px solid var(--border);
-  border-radius: var(--nano-spacing);
-  overflow: hidden;
-  padding: unset;
-}
-&.stats > div:nth-child(-n+2) {
-    border-bottom: 1px solid var(--border);
-    padding-bottom: var(--pico-spacing);
-}
-&.stats > div:nth-child(odd) {
-    border-right: 1px solid var(--border);
-}
-&.stats > div:nth-child(even) {
-    padding-left: var(--pico-spacing);
-}
+  &.image {
+    border: 2px solid var(--border);
+    border-radius: var(--nano-spacing);
+    overflow: hidden;
+    padding: unset;
+  }
+  &.stats > div:nth-child(-n+2) {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: var(--pico-spacing);
+  }
+  &.stats > div:nth-child(odd) {
+      border-right: 1px solid var(--border);
+  }
+  &.stats > div:nth-child(even) {
+      padding-left: var(--pico-spacing);
+  }
 }
 
 .row {
@@ -497,7 +496,7 @@ a {
     }
   }
 }
-@media(max-width: 1326px) {
+@media (max-width: 1326px) {
   #firstpart, #secondpart {
     display: flex;
     flex-flow: row wrap;
@@ -512,24 +511,38 @@ a {
         > h2 {
           width: 100%;
         }
+        @media (min-width: 531px){
         > .widget {
           display: grid;
           width: calc(50% - (var(--kilo-spacing)/2) - (var(--nano-spacing)*2) - 4px);
           &:not(:last-child) {
             margin-right: var(--kilo-spacing);
           }
-        }
+        }}
       }
       &.sidebar, &.reviews, &#sources{
         width: 100%;
       }
     }
   }
+  @media(max-width: 530px){
+  #secondpart > div.sidebar {
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    > .widget {
+      width: calc(100% - var(--nano-spacing) * 2 - 4px);
+    }
+  }
+}
 }
 @media(max-width: 997px) {
   #secondpart{
     > div {
       width: 100%;
+      &:nth-child(2) .widget {
+        min-width: unset;
+      }
     }
   }
 }
