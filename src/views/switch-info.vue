@@ -234,43 +234,36 @@ article(v-if="entry[0]")
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import { useRoute } from 'vue-router'
-import getElement from '@/composables/getElement'
+import { defineComponent } from "vue";
+import { useRoute } from "vue-router";
+import getElement from "@/composables/getElement";
 
-import forceGraph from '@/components/force-graph'
-import imagePrev from '@/components/image-prev'
-import build from '@/components/build'
-import modelsList from '@/components/models'
+import forceGraph from "@/components/force-graph";
+import imagePrev from "@/components/image-prev";
+import build from "@/components/build";
+import modelsList from "@/components/models";
 
 export default defineComponent({
-  name: 'switch-info',
+  name: "switch-info",
   setup() {
-    const route = useRoute()
-    const {
+    const route = useRoute();
+    const { entry, photos, sources, models, modelGroups, switchName, fetchSwitch, fetchSwitchPhotos, fetchSwitchSources, fetchSwitchModels } = getElement();
+    console.log(photos);
+    switchName.value = route.params.switchname;
+    fetchSwitch().then(() => {
+      document.documentElement.style.setProperty("--foreground", entry.value[0].topC[2]);
+      document.documentElement.style.setProperty("--accent", entry.value[0].stemC[2]);
+    });
+    fetchSwitchPhotos();
+    fetchSwitchSources();
+    fetchSwitchModels();
+    return {
       entry,
       photos,
       sources,
       models,
       modelGroups,
-      switchName,
-      fetchSwitch,
-      fetchSwitchPhotos,
-      fetchSwitchSources,
-      fetchSwitchModels,
-    } = getElement()
-    console.log(photos)
-    switchName.value = route.params.switchname
-    fetchSwitch().then(() => {
-      document.documentElement.style.setProperty('--foreground', entry.value[0].topC[2])
-      document.documentElement.style.setProperty('--accent', entry.value[0].stemC[2])
-    })
-    fetchSwitchPhotos()
-    fetchSwitchSources()
-    fetchSwitchModels()
-    return {
-      entry, photos, sources, models, modelGroups,
-    }
+    };
   },
   components: {
     forceGraph,
@@ -280,62 +273,50 @@ export default defineComponent({
   },
   computed: {
     monthsNames() {
-      return [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'June',
-        'July',
-        'Aug',
-        'Sept',
-        'Oct',
-        'Nov',
-        'Dec',
-      ]
+      return ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     },
-    buildImage() { return this.photos[0] ? this.photos.filter((i) => i.type === 1)[0].src : 'NULL' },
+    buildImage() {
+      return this.photos[0] ? this.photos.filter((i) => i.type === 1)[0].src : "NULL";
+    },
     secondColor() {
-      let result = ''
-      if (this.entry[0].topC[0] === 'black' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        result = getComputedStyle(document.documentElement).getPropertyValue('--foreground-dark')
-      } else if (this.entry[0].topC[0] === 'white' && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        result = getComputedStyle(document.documentElement).getPropertyValue('--foreground')
+      let result = "";
+      if (this.entry[0].topC[0] === "black" && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        result = getComputedStyle(document.documentElement).getPropertyValue("--foreground-dark");
+      } else if (this.entry[0].topC[0] === "white" && !window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        result = getComputedStyle(document.documentElement).getPropertyValue("--foreground");
       } else {
         // eslint-disable-next-line prefer-destructuring
-        result = this.entry[0].topC[2]
+        result = this.entry[0].topC[2];
       }
-      return result
+      return result;
     },
     foregroundColor() {
-      let result = ''
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        result = getComputedStyle(document.documentElement).getPropertyValue('--foreground-dark')
+      let result = "";
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        result = getComputedStyle(document.documentElement).getPropertyValue("--foreground-dark");
       } else {
-        result = getComputedStyle(document.documentElement).getPropertyValue('--foreground')
+        result = getComputedStyle(document.documentElement).getPropertyValue("--foreground");
       }
-      return result
+      return result;
     },
     borderColor() {
-      let result = ''
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        result = getComputedStyle(document.documentElement).getPropertyValue('--border-dark')
+      let result = "";
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        result = getComputedStyle(document.documentElement).getPropertyValue("--border-dark");
       } else {
-        result = getComputedStyle(document.documentElement).getPropertyValue('--border')
+        result = getComputedStyle(document.documentElement).getPropertyValue("--border");
       }
-      return result
+      return result;
     },
-
   },
-})
+});
 </script>
 
 <style lang="scss">
 article {
   margin: auto;
   width: 100%;
-  max-width: calc(1165px + 4*var(--kilo-spacing));
+  max-width: calc(1165px + 4 * var(--kilo-spacing));
 }
 
 #firstpart,
@@ -348,7 +329,7 @@ article {
 #firstpart {
   grid-template-columns: auto minmax(min-content, max-content);
   // line below is so long for the purpouse of readability
-  grid-template-rows: repeat(2, minmax(100px, calc(2*91px + 2*2px + 2*var(--nano-spacing) + var(--pico-spacing) + 1px + var(--pico-spacing) + 24px)));
+  grid-template-rows: repeat(2, minmax(100px, calc(2 * 91px + 2 * 2px + 2 * var(--nano-spacing) + var(--pico-spacing) + 1px + var(--pico-spacing) + 24px)));
   .widget.image {
     max-height: 554px;
     grid-row: 1/-1;
@@ -357,8 +338,8 @@ article {
 
 #secondpart {
   grid-template-columns: 295px 435px 435px;
-  div:nth-child(2) .widget{
-      min-width: 399px;
+  div:nth-child(2) .widget {
+    min-width: 399px;
   }
   .sidebar {
     grid-row: 1/5;
@@ -443,8 +424,7 @@ a {
       font: var(--title2);
     }
   }
-  margin: 0 0 calc(var(--kilo-spacing) - var(--nano-spacing))
-    var(--normal-spacing);
+  margin: 0 0 calc(var(--kilo-spacing) - var(--nano-spacing)) var(--normal-spacing);
 }
 
 .widget {
@@ -458,15 +438,15 @@ a {
     overflow: hidden;
     padding: unset;
   }
-  &.stats > div:nth-child(-n+2) {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: var(--pico-spacing);
+  &.stats > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--pico-spacing);
   }
   &.stats > div:nth-child(odd) {
-      border-right: 1px solid var(--border);
+    border-right: 1px solid var(--border);
   }
   &.stats > div:nth-child(even) {
-      padding-left: var(--pico-spacing);
+    padding-left: var(--pico-spacing);
   }
 }
 
@@ -498,47 +478,51 @@ a {
   }
 }
 @media (max-width: 1326px) {
-  #firstpart, #secondpart {
+  #firstpart,
+  #secondpart {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
   }
-  #secondpart{
+  #secondpart {
     > div {
-      width: calc(50% - (var(--kilo-spacing)/2));
-      &.sidebar{
+      width: calc(50% - (var(--kilo-spacing) / 2));
+      &.sidebar {
         display: flex;
         flex-flow: row wrap;
         > h2 {
           width: 100%;
         }
-        @media (min-width: 531px){
-        > .widget {
-          display: grid;
-          width: calc(50% - (var(--kilo-spacing)/2) - (var(--nano-spacing)*2) - 4px);
-          &:not(:last-child) {
-            margin-right: var(--kilo-spacing);
+        @media (min-width: 531px) {
+          > .widget {
+            display: grid;
+            width: calc(50% - (var(--kilo-spacing) / 2) - (var(--nano-spacing) * 2) - 4px);
+            &:not(:last-child) {
+              margin-right: var(--kilo-spacing);
+            }
           }
-        }}
+        }
       }
-      &.sidebar, &.reviews, &#sources{
+      &.sidebar,
+      &.reviews,
+      &#sources {
         width: 100%;
       }
     }
   }
-  @media(max-width: 530px){
-  #secondpart > div.sidebar {
-    display: flex;
-    align-items: center;
-    flex-flow: column nowrap;
-    > .widget {
-      width: calc(100% - var(--nano-spacing) * 2 - 4px);
+  @media (max-width: 530px) {
+    #secondpart > div.sidebar {
+      display: flex;
+      align-items: center;
+      flex-flow: column nowrap;
+      > .widget {
+        width: calc(100% - var(--nano-spacing) * 2 - 4px);
+      }
     }
   }
 }
-}
-@media(max-width: 997px) {
-  #secondpart{
+@media (max-width: 997px) {
+  #secondpart {
     > div {
       width: 100%;
       &:nth-child(2) .widget {

@@ -35,11 +35,11 @@ class CatTemplate {
   dir: string;
 
   constructor(name: string, dir?: string) {
-    this.name = name
+    this.name = name;
     if (dir === undefined) {
-      this.dir = `/${name}`
+      this.dir = `/${name}`;
     } else {
-      this.dir = dir
+      this.dir = dir;
     }
   }
 }
@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       mainCategories: [
-        new CatTemplate('switch', '/'),
+        new CatTemplate("switch", "/"),
         // new CatTemplate('keycap'),
         // new CatTemplate('stabilizer'),
         // new CatTemplate('oring'),
@@ -58,14 +58,14 @@ export default {
         // new CatTemplate('case'),
         // new CatTemplate('plate'),
       ],
-    }
+    };
   },
-}
+};
 </script>
 <style lang="scss">
 :root {
-  --keycomp-a: #14294B;
-  --keycomp-b: #E94560;
+  --keycomp-a: #14294b;
+  --keycomp-b: #e94560;
 
   --foreground: black;
   --accent: red;
@@ -74,7 +74,7 @@ export default {
 
   --foreground-dark: white;
   --accent-dark: red; //TODO
-  --border-dark: #7A7A7A;
+  --border-dark: #7a7a7a;
   --background-dark: #0a0a0f;
 
   // --pico-spacing: clamp(4px, 0.67vw, 8px);
@@ -103,14 +103,16 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
-body, body > #app {
+body,
+body > #app {
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
 }
 
-header, footer {
+header,
+footer {
   min-height: var(--giga-spacing);
 }
 
@@ -121,16 +123,16 @@ header {
   background: white;
   z-index: 144;
   > .container {
-      display: flex;
-      margin: auto;
-      width: 100%;
-      max-width: 1920px;
+    display: flex;
+    margin: auto;
+    width: 100%;
+    max-width: 1920px;
     > a {
       display: flex;
       flex-flow: row nowrap;
       > img {
-      margin: auto auto auto var(--mili-spacing);
-      filter: invert(1);
+        margin: auto auto auto var(--mili-spacing);
+        filter: invert(1);
       }
       > .version {
         position: relative;
@@ -168,21 +170,23 @@ header {
         &.router-link-exact-active {
           background: var(--accent);
         }
-    }}
+      }
+    }
   }
 }
 
 footer {
   margin-top: auto;
   > .container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  font: var(--button);
-  > span{
-    margin: var(--nano-spacing);
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    font: var(--button);
+    > span {
+      margin: var(--nano-spacing);
+    }
   }
-}}
+}
 @media (prefers-color-scheme: dark) {
   body {
     background: var(--background-dark);
@@ -190,13 +194,15 @@ footer {
   }
   header {
     background: var(--background-dark);
-  > .container > a {
-  > .version {
-    color: var(--background-dark);
-    background: var(--foreground-dark);
+    > .container > a {
+      > .version {
+        color: var(--background-dark);
+        background: var(--foreground-dark);
+      }
+      > img {
+        filter: invert(0);
+      }
+    }
   }
-  > img {
-    filter: invert(0);
-  }}}
 }
 </style>
