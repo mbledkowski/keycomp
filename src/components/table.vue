@@ -34,42 +34,45 @@ main
 </template>
 
 <script>
-import getElement from '@/composables/getElement'
+import getElement from "@/composables/getElement";
 
 export default {
   props: {
     options: Object,
   },
   data() {
-    return { items: {} }
+    return { items: {} };
   },
   setup() {
-    const { page, fetchSwitches } = getElement()
-    fetchSwitches()
-    return { page }
+    const { page, fetchSwitches } = getElement();
+    fetchSwitches();
+    return { page };
   },
   computed: {
     listOfSwitches() {
       function type(options, element) {
-        return options.type.includes(element.travel.toString())
+        return options.type.includes(element.travel.toString());
       }
       function mount(options, element) {
-        let sum = 0
+        let sum = 0;
         for (let i = 0; i < options.mount.length; i++) {
-          sum += parseInt(options.mount[i], 10)
+          sum += parseInt(options.mount[i], 10);
         }
-        console.log(sum)
-        return element.mount === sum || element.mount === 3
+        console.log(sum);
+        return element.mount === sum || element.mount === 3;
       }
       function profile(options, element) {
-        return options.profile.includes(element.profile.toString())
+        return options.profile.includes(element.profile.toString());
       }
-      return this.page.filter((element) => (this.options.type.length ? type(this.options, element) : true)
-          && (this.options.mount.length ? mount(this.options, element) : true)
-          && (this.options.profile.length ? profile(this.options, element) : true))
+      return this.page.filter(
+        (element) =>
+          (this.options.type.length ? type(this.options, element) : true) &&
+          (this.options.mount.length ? mount(this.options, element) : true) &&
+          (this.options.profile.length ? profile(this.options, element) : true)
+      );
     },
   },
-}
+};
 </script>
 
 <!-- "scoped" attribute to limit CSS to this component only -->
@@ -85,21 +88,22 @@ main {
     background: var(--keycomp-a);
     margin-bottom: var(--nano-spacing);
   }
-  .item{
+  .item {
     font: var(--button);
     border-radius: 4px;
     padding: 0 var(--pico-spacing) 0 calc(var(--pico-spacing) - 4px);
     border-left: 4px transparent solid;
-    &:hover{
+    &:hover {
       border-left: 4px var(--keycomp-b) solid;
     }
-    &:focus{
+    &:focus {
       border-left: 4px var(--keycomp-b) solid;
-      background: rgba(255,255,255,.1);
+      background: rgba(255, 255, 255, 0.1);
     }
   }
 
-  #tableBar, .item {
+  #tableBar,
+  .item {
     display: grid;
     grid-template-columns: /*minmax(36px, 52px)*/ 7fr repeat(2, 3fr) repeat(4, 2fr);
     margin-left: var(--pico-spacing);
@@ -111,18 +115,19 @@ main {
       overflow: hidden;
     }
   }
-  .item div:not(:last-child){
+  .item div:not(:last-child) {
     border-right: 2px var(--border) solid;
   }
-  #tableBar div{
+  #tableBar div {
     color: var(--foreground-dark);
-    &:not(:last-child){
-    border-right: 2px var(--border-dark) solid;
-  }}
+    &:not(:last-child) {
+      border-right: 2px var(--border-dark) solid;
+    }
+  }
 }
 @media (prefers-color-scheme: dark) {
   main {
-    .item div:not(:last-child){
+    .item div:not(:last-child) {
       border-right: 2px var(--border-dark) solid;
     }
   }

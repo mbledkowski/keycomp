@@ -1,26 +1,26 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import home from '../views/switches.vue'
-import error from '../views/error.vue'
-import switchInfo from '../views/switch-info.vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import home from "../views/switches.vue";
+import error from "../views/error.vue";
+import switchInfo from "../views/switch-info.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/switch',
-    redirect: '/',
+    path: "/switch",
+    redirect: "/",
   },
   {
-    path: '/',
-    name: 'switch',
+    path: "/",
+    name: "switch",
     component: home,
   },
   {
-    path: '/:error([45][0-9]*)',
-    name: 'error',
+    path: "/:error([45][0-9]*)",
+    name: "error",
     component: error,
   },
   {
-    path: '/:switchname([a-zA-Z0-9-]+[a-zA-Z]{2}[a-zA-Z0-9-]+)',
-    name: 'switch-info',
+    path: "/:switchname([a-zA-Z0-9-]+[a-zA-Z]{2}[a-zA-Z0-9-]+)",
+    name: "switch-info",
     component: switchInfo,
   },
   // {
@@ -86,11 +86,11 @@ const routes: Array<RouteRecordRaw> = [
   //   name: 'cable',
   //   component: () => import('../views/cable.vue'),
   // },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-})
+});
 
-export default router
+export default router;

@@ -48,13 +48,13 @@ div
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
     options: Object,
   },
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -73,16 +73,16 @@ section > .hor-list {
 }
 section {
   margin: var(--nano-spacing);
-  > .hor-list{
+  > .hor-list {
     > input {
-      display:none;
+      display: none;
     }
     > label {
       font: var(--title2);
       margin: 0 10px 0 0;
       user-select: none;
     }
-    > input[type="checkbox"]:checked+label{
+    > input[type="checkbox"]:checked + label {
       background-image: linear-gradient(to left, var(--keycomp-b) 100%, transparent 0%);
       background-position: 0 1.04em;
       background-repeat: repeat-x;
